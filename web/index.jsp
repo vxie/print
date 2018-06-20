@@ -10,7 +10,7 @@
     <script type="text/javascript">
         var LODOP = document.getElementById("LODOP");//这行语句是为了符合DTD规范
         /*new PrintUtils(打印模板ID,模板背景图路径)*/
-        var PrintUtils = new PrintUtils('PrintTemplateDemo1', '/images/backimg.jpg');
+        var PrintUtils = new PrintUtils('PrintTemplateDemo1', '/images/backimg2.jpg');
 
         PrintUtils.CheckLodop();
 
