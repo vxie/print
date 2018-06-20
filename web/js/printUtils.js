@@ -20,11 +20,11 @@ PrintUtils.prototype.CheckLodop = function(){
    var oldVersion=LODOP.Version;
        newVerion="5.0.5.8";
    if (oldVersion==null){
-	document.write("<h3><font color='#FF00FF'>打印控件未安装!点击这里<a href='/active/lodop/install_lodop.exe'>执行安装</a>,安装后请刷新页面。</font></h3>");
+	document.write("<h3><font color='#FF00FF'>打印控件未安装!点击这里<a href='/docs/install_lodop.exe'>执行安装</a>,安装后请刷新页面。</font></h3>");
 	if (navigator.appName=="Netscape")
-	document.write("<h3><font color='#FF00FF'>（Firefox浏览器用户需先点击这里<a href='/active/lodop/npActiveXFirefox4x.xpi'>安装运行环境</a>）</font></h3>");
+	document.write("<h3><font color='#FF00FF'>（Firefox浏览器用户需先点击这里<a href='/docs/npActiveXFirefox4x.xpi'>安装运行环境</a>）</font></h3>");
    } else if (oldVersion<newVerion)
-	document.write("<h3><font color='#FF00FF'>打印控件需要升级!点击这里<a href='/active/lodop/install_lodop.exe'>执行升级</a>,升级后请重新进入。</font></h3>");
+	document.write("<h3><font color='#FF00FF'>打印控件需要升级!点击这里<a href='/docs/install_lodop.exe'>执行升级</a>,升级后请重新进入。</font></h3>");
 }
 /**
  * 准备打印所需的ajax请求参数,各个页面可根据元素的具体情况重写这个方法
@@ -114,6 +114,27 @@ PrintUtils.prototype.printDesign = function(printTempID,bkImgPath) {
 		error : function(data) {alert(data);}
 	}); 
 }
+
+
+PrintUtils.prototype.printDesign2 = function(printCode, bkImgPath) {
+    bkImgPath = bkImgPath || this.bkImgPath;
+    printCode = printCode || 'LODOP.PRINT_INIT("");';
+    printCode = printCode.replace(/\r/ig,"").replace(/\n/ig,"");
+
+    eval(printCode);
+    if(bkImgPath) {
+        LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='"+bkImgPath+"'>");
+    }
+    //LODOP.SET_SHOW_MODE("HIDE_PBUTTIN_PREVIEW", 1);//隐藏预览窗口的打印按钮(设计、测试要求屏蔽!)
+    //LODOP.SET_SHOW_MODE("HIDE_PBUTTIN_SETUP", 1);//隐藏打印维护窗口的打印按钮(似乎6.0版本才生效)(设计、测试要求屏蔽!)
+    var newCode = LODOP.PRINT_DESIGN();
+
+    if(console && console.log) {
+        console.log(newCode);
+    }
+}
+
+
 /**
  * 打印设计请求成功之处理函数
  * @param bkImgPath
